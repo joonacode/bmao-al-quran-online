@@ -1,5 +1,5 @@
 import listEndpoint from '@/apis';
-import { ListSurat } from '@/components';
+import { ListSurah } from '@/components';
 import { MainLayout } from '@/layouts';
 import { NextSeo } from 'next-seo';
 import React from 'react';
@@ -26,7 +26,7 @@ const HomePage = ({ listSurat }) => {
         }}
       />
       <MainLayout>
-        <ListSurat data={listSurat} />
+        <ListSurah data={listSurat} />
       </MainLayout>
     </>
   );
