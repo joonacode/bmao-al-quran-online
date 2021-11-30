@@ -1,0 +1,8 @@
+@font-face {
+  font-family: FontAlQalam;
+  src: url('../public/fonts/Al_Qalam_Quran.ttf');
+}
+
+.fontAlQalam {
+  font-family: FontAlQalam !important;
+}
