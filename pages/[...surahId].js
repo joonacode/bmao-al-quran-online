@@ -55,7 +55,7 @@ const HomePage = ({ detailSurah, detailSurahID }) => {
               type: 'png',
               width: 1200,
               height: 630,
-              url: process.env.NEXT_PUBLIC_MAIN_URL + '/logo.png',
+              url: process.env.NEXT_PUBLIC_MAIN_URL + 'logo.png',
               alt: 'logo',
             },
           ],
