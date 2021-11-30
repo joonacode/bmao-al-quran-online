@@ -57,9 +57,11 @@ const VerseItem = ({
   };
 
   const handleShare = (data, shareBy) => {
-    const urlShare = `${process.env.NEXT_PUBLIC_MAIN_URL + query.surahId[0]}/${
-      data.number.inSurah
-    }`;
+    const urlShare = `${
+      process.env.NEXT_PUBLIC_MAIN_URL +
+      (locale !== 'id' ? 'en/' : '') +
+      query.surahId[0]
+    }/${data.number.inSurah}`;
     const text = `Q.S ${query.surahId[0]}:${data.number.inSurah} - ${
       data.text.arab
     } - ${data.translation[locale.split('-')[0]]} - ${urlShare}`;
