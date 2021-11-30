@@ -1,16 +1,19 @@
 import listEndpoint from '@/apis';
 import { ListVerses } from '@/components';
 import { MainLayout } from '@/layouts';
-import { IconButton } from '@chakra-ui/button';
+import list_surah from '@/list_surah';
+import { Button, IconButton } from '@chakra-ui/button';
+import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { Box, Flex, Heading, Text } from '@chakra-ui/layout';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { BiCaretDown, BiCaretUp } from 'react-icons/bi';
-import { animateScroll as scroll } from 'react-scroll';
+import { animateScroll as scroll, scroller } from 'react-scroll';
+import Link from 'next/link';
 
 const HomePage = ({ detailSurah, detailSurahID }) => {
-  const { locale, asPath } = useRouter();
+  const { locale, asPath, query } = useRouter();
   const [scrollBtn, setScrollBtn] = useState(false);
   const [isBottom, setIsBottom] = useState(false);
   const changeNav = () => {
@@ -22,7 +25,7 @@ const HomePage = ({ detailSurah, detailSurahID }) => {
     } else {
       setIsBottom(false);
     }
-    if (window.scrollY >= 80) {
+    if (window.scrollY >= 300) {
       setScrollBtn(true);
     } else {
       setScrollBtn(false);
@@ -31,7 +34,14 @@ const HomePage = ({ detailSurah, detailSurahID }) => {
   useEffect(() => {
     window.addEventListener('scroll', changeNav);
   }, []);
-
+  const handleSearch = (v) => {
+    scroller.scrollTo(`${v}`, {
+      duration: 1000,
+      delay: 100,
+      smooth: true,
+      offset: -110,
+    });
+  };
   return (
     <>
       <NextSeo
@@ -61,7 +71,11 @@ const HomePage = ({ detailSurah, detailSurahID }) => {
           ],
         }}
       />
-      <MainLayout>
+
+      <MainLayout
+        handleSearch={handleSearch}
+        totalAyat={detailSurah.numberOfVerses}
+      >
         {scrollBtn && (
           <Flex
             zIndex={9}
@@ -93,7 +107,7 @@ const HomePage = ({ detailSurah, detailSurahID }) => {
           <Heading
             as='h5'
             className='fontAlQalam'
-            size='xl'
+            size='2xl'
             fontWeight='normal'
             textAlign='center'
             mb={10}
@@ -102,6 +116,48 @@ const HomePage = ({ detailSurah, detailSurahID }) => {
           </Heading>
         )}
         <ListVerses verses={detailSurah.verses} versesID={detailSurahID} />
+        <Flex mt={20} justifyContent='space-between' alignItems='center'>
+          {Number(query.surahId[0]) > 1 && (
+            <Link
+              href={`/${Number(query.surahId[0]) - 1}`}
+              locale={locale}
+              passHref
+            >
+              <Button
+                mr='auto'
+                leftIcon={<ArrowBackIcon />}
+                colorScheme='teal'
+                variant='outline'
+              >
+                {
+                  list_surah.find(
+                    (sura) => sura.number === Number(query.surahId[0]) - 1,
+                  ).name.transliteration[locale]
+                }{' '}
+              </Button>
+            </Link>
+          )}
+          {Number(query.surahId[0]) < 114 && (
+            <Link
+              href={`/${Number(query.surahId[0]) + 1}`}
+              locale={locale}
+              passHref
+            >
+              <Button
+                ml='auto'
+                rightIcon={<ArrowForwardIcon />}
+                colorScheme='teal'
+                variant='outline'
+              >
+                {
+                  list_surah.find(
+                    (sura) => sura.number === Number(query.surahId[0]) + 1,
+                  ).name.transliteration[locale]
+                }
+              </Button>
+            </Link>
+          )}
+        </Flex>
       </MainLayout>
     </>
   );

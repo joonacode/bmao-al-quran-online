@@ -3,7 +3,15 @@ import { Box, Flex, Text } from '@chakra-ui/layout';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import ReactPlayer from 'react-player';
-import { BiPlay, BiPause, BiRefresh, BiCopy, BiShareAlt } from 'react-icons/bi';
+import { scroller } from 'react-scroll';
+import {
+  BiPlay,
+  BiPause,
+  BiRefresh,
+  BiCopy,
+  BiShareAlt,
+  BiCopyAlt,
+} from 'react-icons/bi';
 import {
   FaFacebookF,
   FaTelegramPlane,
@@ -49,7 +57,9 @@ const VerseItem = ({
   };
 
   const handleShare = (data, shareBy) => {
-    const urlShare = `${window.location.href}/${data.number.inSurah}`;
+    const urlShare = `${process.env.NEXT_PUBLIC_MAIN_URL + query.surahId[0]}/${
+      data.number.inSurah
+    }`;
     const text = `Q.S ${query.surahId[0]}:${data.number.inSurah} - ${
       data.text.arab
     } - ${data.translation[locale.split('-')[0]]} - ${urlShare}`;
@@ -59,7 +69,7 @@ const VerseItem = ({
         position: 'bottom-right',
         title: 'Berhasil di salin.',
         status: 'success',
-        duration: 1000,
+        duration: 2000,
       });
     } else if (shareBy === 'wa') {
       window.open(`https://wa.me/?text=${text}`, '_blank');
@@ -81,10 +91,24 @@ const VerseItem = ({
     }
   };
 
+  const handleClickNo = (no) => {
+    scroller.scrollTo(`${no}`, {
+      duration: 1000,
+      delay: 100,
+      smooth: true,
+      offset: -110,
+    });
+  };
+
   return (
     <Box w='full' mb={10} id={`${data.number.inSurah}`}>
       <Flex alignItems='center' mb={5}>
-        <Button mr={2} colorScheme='gray' size='sm'>
+        <Button
+          onClick={() => handleClickNo(data.number.inSurah)}
+          mr={2}
+          colorScheme='gray'
+          size='sm'
+        >
           {data.number.inSurah}
         </Button>
         <IconButton
@@ -145,7 +169,7 @@ const VerseItem = ({
           <MenuList>
             <MenuItem
               onClick={() => handleShare(data, 'copy')}
-              icon={<BiShareAlt />}
+              icon={<BiCopy />}
             >
               Salin Link
             </MenuItem>
@@ -176,7 +200,7 @@ const VerseItem = ({
           </MenuList>
         </Menu>
       </Flex>
-      <Text fontSize={30} mb={5} className='fontAlQalam' textAlign='right'>
+      <Text fontSize={36} mb={5} className='fontAlQalam' textAlign='right'>
         {data.text.arab}
       </Text>
       {locale.split('-')[0] === 'en' ? (
