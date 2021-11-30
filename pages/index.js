@@ -5,6 +5,7 @@ import list_surah from '@/list_surah';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { Heading } from '@chakra-ui/react';
 
 const HomePage = () => {
   const { locale } = useRouter();
@@ -48,7 +49,22 @@ const HomePage = () => {
         }}
       />
       <MainLayout resetSearch={resetSearch} handleSearch={handleSearch}>
-        <ListSurah data={listSurah} />
+        {listSurah.length === 0 ? (
+          <Heading
+            as='h5'
+            size='xl'
+            textAlign='center'
+            mb={10}
+            h={500}
+            justifyContent='center'
+            alignItems='center'
+            display='flex'
+          >
+            Surat Tidak Di temukan
+          </Heading>
+        ) : (
+          <ListSurah data={listSurah} />
+        )}
       </MainLayout>
     </>
   );
