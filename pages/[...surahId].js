@@ -42,6 +42,7 @@ const HomePage = ({ detailSurah, detailSurahID }) => {
         }
         title={`${detailSurah.name.transliteration[locale.split('-')[0]]}`}
         openGraph={{
+          locale: locale,
           title: `${detailSurah.name.transliteration[locale.split('-')[0]]}`,
           url: process.env.NEXT_PUBLIC_MAIN_URL + asPath,
           description:
