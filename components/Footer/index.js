@@ -34,7 +34,7 @@ const Footer = () => {
             defaultValue={router.locale === 'id' ? 'id' : 'en'}
           >
             <option value='id'>Indonesia</option>
-            <option value='en'>Inggris</option>
+            <option value='en'>English</option>
           </Select>
         </Flex>
       </Container>
