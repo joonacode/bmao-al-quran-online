@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react';
 import { BiCaretDown, BiCaretUp } from 'react-icons/bi';
 import { animateScroll as scroll, scroller } from 'react-scroll';
 import Link from 'next/link';
+import { Tag } from '@chakra-ui/tag';
 
 const HomePage = ({ detailSurah, detailSurahID }) => {
   const { locale, asPath, query } = useRouter();
@@ -76,33 +77,11 @@ const HomePage = ({ detailSurah, detailSurahID }) => {
         handleSearch={handleSearch}
         totalAyat={detailSurah.numberOfVerses}
       >
-        {scrollBtn && (
-          <Flex
-            zIndex={9}
-            direction='column'
-            position='fixed'
-            right={{ base: '20px', lg: '50px' }}
-            bottom={{ base: '40px', lg: '70px' }}
-          >
-            <IconButton
-              mb={3}
-              shadow='md'
-              colorScheme='blue'
-              aria-label='Search database'
-              icon={<BiCaretUp />}
-              onClick={() => scroll.scrollToTop()}
-            />
-            {!isBottom && (
-              <IconButton
-                shadow='md'
-                colorScheme='blue'
-                aria-label='Search database'
-                icon={<BiCaretDown />}
-                onClick={() => scroll.scrollToBottom()}
-              />
-            )}
-          </Flex>
-        )}
+        <Flex justifyContent='center' w='full' mb={10}>
+          <Tag mr={3}>{detailSurah.name.transliteration[locale]}</Tag>
+          <Tag mr={3}>{detailSurah.numberOfVerses} Ayat</Tag>
+          <Tag>{detailSurah.revelation[locale]}</Tag>
+        </Flex>
         {detailSurah.preBismillah && (
           <Heading
             as='h5'
@@ -158,6 +137,33 @@ const HomePage = ({ detailSurah, detailSurahID }) => {
             </Link>
           )}
         </Flex>
+        {scrollBtn && (
+          <Flex
+            zIndex={9}
+            direction='column'
+            position='fixed'
+            right={{ base: '20px', lg: '50px' }}
+            bottom={{ base: '40px', lg: '70px' }}
+          >
+            <IconButton
+              mb={3}
+              shadow='md'
+              colorScheme='blue'
+              aria-label='Search database'
+              icon={<BiCaretUp />}
+              onClick={() => scroll.scrollToTop()}
+            />
+            {!isBottom && (
+              <IconButton
+                shadow='md'
+                colorScheme='blue'
+                aria-label='Search database'
+                icon={<BiCaretDown />}
+                onClick={() => scroll.scrollToBottom()}
+              />
+            )}
+          </Flex>
+        )}
       </MainLayout>
     </>
   );
