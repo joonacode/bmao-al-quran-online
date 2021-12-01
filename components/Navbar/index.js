@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { SearchIcon, CloseIcon } from '@chakra-ui/icons';
 import { Button } from '@chakra-ui/button';
-
+import { Spinner } from '@chakra-ui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 const Navbar = ({ handleSearch, resetSearch, totalAyat }) => {
@@ -20,10 +20,42 @@ const Navbar = ({ handleSearch, resetSearch, totalAyat }) => {
   const [searchBySurah, setSearchBySurah] = useState({
     status: false,
     value: '',
+    isLoading: false,
   });
 
   const toggleSearch = () => {
     setSearchBySurah((prev) => ({ ...prev, status: !prev.status }));
+  };
+
+  const handleChangeSearch = (e) => {
+    setSearchBySurah((prev) => ({
+      ...prev,
+      value: e.target.value,
+      isLoading: true,
+    }));
+    setTimeout(() => {
+      setSearchBySurah((prev) => ({
+        ...prev,
+        value: e.target.value,
+        isLoading: false,
+      }));
+      handleSearch(e.target.value.toLowerCase());
+    }, 1000);
+  };
+
+  const handleResetSearch = () => {
+    setSearchBySurah((prev) => ({
+      ...prev,
+      isLoading: true,
+    }));
+    setTimeout(() => {
+      resetSearch();
+      setSearchBySurah((prev) => ({
+        ...prev,
+        value: '',
+        isLoading: false,
+      }));
+    }, 500);
   };
 
   return (
@@ -93,13 +125,7 @@ const Navbar = ({ handleSearch, resetSearch, totalAyat }) => {
           >
             <InputGroup size='md' background={bg}>
               <Input
-                onChange={(e) => {
-                  setSearchBySurah({
-                    ...searchBySurah,
-                    value: e.target.value,
-                  });
-                  handleSearch(e.target.value.toLowerCase());
-                }}
+                onChange={handleChangeSearch}
                 pr='4.5rem'
                 type={'text'}
                 placeholder='Cari berdasarkan nama surat'
@@ -107,19 +133,13 @@ const Navbar = ({ handleSearch, resetSearch, totalAyat }) => {
               />
               {searchBySurah.value.length > 0 && (
                 <InputRightElement width='4.5rem'>
-                  <Button
-                    onClick={() => {
-                      resetSearch();
-                      setSearchBySurah({
-                        ...searchBySurah,
-                        value: '',
-                      });
-                    }}
-                    h='1.75rem'
-                    size='sm'
-                  >
-                    Delete
-                  </Button>
+                  {searchBySurah.isLoading ? (
+                    <Spinner size='sm' />
+                  ) : (
+                    <Button onClick={handleResetSearch} h='1.75rem' size='sm'>
+                      Delete
+                    </Button>
+                  )}
                 </InputRightElement>
               )}
             </InputGroup>

@@ -14,7 +14,7 @@ import Link from 'next/link';
 import { Tag } from '@chakra-ui/tag';
 
 const HomePage = ({ detailSurah, detailSurahID }) => {
-  const { locale, asPath, query } = useRouter();
+  const { locale, asPath, query, isFallback } = useRouter();
   const [scrollBtn, setScrollBtn] = useState(false);
   const [isBottom, setIsBottom] = useState(false);
   const changeNav = () => {
@@ -43,6 +43,9 @@ const HomePage = ({ detailSurah, detailSurahID }) => {
       offset: -110,
     });
   };
+  if (isFallback) {
+    return <p>Loading</p>;
+  }
   return (
     <>
       <NextSeo
@@ -196,6 +199,6 @@ export async function getStaticPaths() {
     .map((_, i) => ({ params: { surahId: [`${i + 1}`] } }));
   return {
     paths,
-    fallback: 'blocking',
+    fallback: true,
   };
 }
