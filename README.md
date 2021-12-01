@@ -1,6 +1,6 @@
 ## About The Project
 
-BMAO merupakan website untuk Membaca, Menghapal, Mendengarkan Al-Qur'an secara online <a href="https://bmao.vercel.app/" target="_blank">View Demo</a>
+BMAO merupakan website untuk Membaca, Menghapal, Mendengarkan Al-Qur'an secara online <a href="https://bmao.vercel.app/" target="_blank">View Demo</a>. Website ini terinspirasi dari <a href="https://bmao.vercel.app/" target="_blank">quran.kemenag.go.id</a> untuk API saya dapatkan dari <a href="https://github.com/sutanlab/quran-api" target="_blank">https://github.com/sutanlab/quran-api</a>
 
 ## Built With
 
