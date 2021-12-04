@@ -68,7 +68,8 @@ const ListVerses = ({ verses, versesID }) => {
           handleLoop={handleLoop}
           key={i}
           data={verse}
-          dataID={versesID[i]}
+          isDataIdLoading={versesID.isLoading}
+          dataID={versesID.data[i]}
         />
       ))}
     </div>

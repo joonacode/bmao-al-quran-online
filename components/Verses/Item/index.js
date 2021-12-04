@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import ReactPlayer from 'react-player';
 import { scroller } from 'react-scroll';
+import { Skeleton } from '@chakra-ui/react';
 import {
   BiPlay,
   BiPause,
@@ -31,6 +32,7 @@ const VerseItem = ({
   handlePlay,
   handleEnd,
   handleLoop,
+  isDataIdLoading,
 }) => {
   const { locale, query } = useRouter();
   const toast = useToast();
@@ -208,10 +210,16 @@ const VerseItem = ({
       {locale.split('-')[0] === 'en' ? (
         <Text>{data.text.transliteration.en}</Text>
       ) : (
-        <Box
-          dangerouslySetInnerHTML={{ __html: dataID.tr }}
-          textTransform='initial'
-        />
+        <>
+          {isDataIdLoading ? (
+            <Skeleton height='20px' />
+          ) : (
+            <Box
+              dangerouslySetInnerHTML={{ __html: dataID?.tr }}
+              textTransform='initial'
+            />
+          )}
+        </>
       )}
       <Text mt={3}>{data.translation[locale.split('-')[0]]}</Text>
       {isPlay.status && isPlay.no === data.number.inSurah ? (

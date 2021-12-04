@@ -12,8 +12,14 @@ import { BiCaretDown, BiCaretUp } from 'react-icons/bi';
 import { animateScroll as scroll, scroller } from 'react-scroll';
 import Link from 'next/link';
 import { Tag } from '@chakra-ui/tag';
+import { Spinner } from '@chakra-ui/react';
+import { Modal } from '@chakra-ui/react';
 
-const HomePage = ({ detailSurah, detailSurahID }) => {
+const HomePage = ({ detailSurah }) => {
+  const [detailSurahID, setDetailSurahId] = useState({
+    data: [],
+    isLoading: true,
+  });
   const { locale, asPath, query, isFallback } = useRouter();
   const [scrollBtn, setScrollBtn] = useState(false);
   const [isBottom, setIsBottom] = useState(false);
@@ -43,8 +49,29 @@ const HomePage = ({ detailSurah, detailSurahID }) => {
       offset: -110,
     });
   };
+
+  useEffect(() => {
+    const getTranslate = async (param) => {
+      const responseTranslate = await listEndpoint.getTranslateSuratID(param);
+      setDetailSurahId({
+        data: responseTranslate.data,
+        isLoading: false,
+      });
+    };
+
+    if (locale === 'id' && query.hasOwnProperty('surahId')) {
+      getTranslate(query.surahId[0]);
+    }
+  }, [locale, query]);
+
   if (isFallback) {
-    return <p>Loading</p>;
+    return (
+      <Modal closeOnOverlayClick={false} isOpen={true}>
+        <Flex height={'100vh'} justifyContent='center' alignItems='center'>
+          <Spinner size='xl' />
+        </Flex>
+      </Modal>
+    );
   }
   return (
     <>
@@ -181,14 +208,9 @@ export async function getStaticProps(ctx) {
     };
   }
   const response = await listEndpoint.getDetailSurat(ctx.params.surahId[0]);
-  const responseTranslate = await listEndpoint.getTranslateSuratID(
-    ctx.params.surahId[0],
-  );
-
   return {
     props: {
       detailSurah: response.data.data,
-      detailSurahID: responseTranslate.data,
     },
   };
 }
