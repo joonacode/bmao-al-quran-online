@@ -107,13 +107,15 @@ const HomePage = ({ detailSurah }) => {
         handleSearch={handleSearch}
         totalAyat={detailSurah.numberOfVerses}
       >
-        <Flex justifyContent='center' w='full' mb={10}>
-          <Tag mr={3}>
+        <Flex justifyContent='center' flexWrap={'wrap'} w='full' mb={10}>
+          <Tag mr={3} mt={2}>
             {detailSurah.name.transliteration[locale]} -{' '}
             {detailSurah.name.translation[locale]}
           </Tag>
-          <Tag mr={3}>{detailSurah.numberOfVerses} Ayat</Tag>
-          <Tag>{detailSurah.revelation[locale]}</Tag>
+          <Tag mr={3} mt={2}>
+            {detailSurah.numberOfVerses} Ayat
+          </Tag>
+          <Tag mt={2}>{detailSurah.revelation[locale]}</Tag>
         </Flex>
         {detailSurah.preBismillah && (
           <Heading

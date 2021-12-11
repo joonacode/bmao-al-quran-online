@@ -129,7 +129,6 @@ const VerseItem = ({
             )
           }
         />
-
         {isPlay.status && isPlay.no === data.number.inSurah && (
           <>
             <ReactPlayer

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { scroller } from 'react-scroll';
 import { useRouter } from 'next/router';
-import { ModalTafsir, VerseItem } from '@/components';
+import { ModalAutoNext, ModalTafsir, VerseItem } from '@/components';
 
 const ListVerses = ({ detailSurah, versesID }) => {
-  const { query, push } = useRouter();
+  const { query } = useRouter();
   const [isPlay, setIsPlay] = useState({
     status: false,
     loop: false,
@@ -13,6 +13,15 @@ const ListVerses = ({ detailSurah, versesID }) => {
 
   const [detailAyat, setDetailAyat] = useState({});
   const [modalTafsir, setModalTafsir] = useState(false);
+  const [modalAutoNext, setModalAutoNext] = useState(false);
+
+  const showModalAutoNext = () => {
+    setModalAutoNext(true);
+  };
+  const closeModalAutoNext = () => {
+    setModalAutoNext(false);
+  };
+
   const showModalTafsir = (data) => {
     setModalTafsir(true);
     setDetailAyat(data);
@@ -53,11 +62,16 @@ const ListVerses = ({ detailSurah, versesID }) => {
         smooth: true,
         offset: -110,
       });
+      if (localStorage.getItem('autoPlay')) {
+        localStorage.removeItem('autoPlay');
+      }
+      if (Number(query.surahId[0]) < 114 && status === false) {
+        showModalAutoNext();
+      }
     } else {
       setIsPlay((prev) => ({ ...prev, loop: false, status: false, no }));
     }
   };
-
   useEffect(() => {
     if (query.surahId.length > 1) {
       scroller.scrollTo(query.surahId[1], {
@@ -67,6 +81,11 @@ const ListVerses = ({ detailSurah, versesID }) => {
         offset: -110,
       });
     }
+    setTimeout(() => {
+      if (localStorage.getItem('autoPlay')) {
+        handlePlay(1);
+      }
+    }, 2000);
   }, [query.surahId]);
 
   return (
@@ -78,6 +97,9 @@ const ListVerses = ({ detailSurah, versesID }) => {
           detailAyat={detailAyat}
           detailSurah={detailSurah}
         />
+      )}
+      {modalAutoNext && (
+        <ModalAutoNext isOpen={modalAutoNext} onClose={closeModalAutoNext} />
       )}
       {detailSurah.verses.map((verse, i) => (
         <VerseItem

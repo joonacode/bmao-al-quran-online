@@ -6,6 +6,7 @@ import ButtonTheme from './ButtonTheme';
 import ListVerses from './Verses/List';
 import VerseItem from './Verses/Item';
 import ModalTafsir from './ModalTafsir';
+import ModalAutoNext from './ModalAutoNext';
 
 export {
   Navbar,
@@ -16,4 +17,5 @@ export {
   VerseItem,
   SurahItem,
   ModalTafsir,
+  ModalAutoNext,
 };
