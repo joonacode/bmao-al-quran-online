@@ -137,11 +137,12 @@ const VerseItem = ({
               loop={isPlay.loop && isPlay.no === data.number.inSurah}
               onProgress={(progress) => {
                 setPlayed({
-                  playedSeconds: progress.playedSeconds,
+                  playedSeconds: parseFloat(progress.playedSeconds),
                   loadedSeconds: progress.loadedSeconds,
                 });
               }}
               style={{ display: 'none' }}
+              progressInterval={10}
               playing={isPlay.status}
               url={data.audio.primary}
             />
@@ -235,6 +236,7 @@ const VerseItem = ({
       <Text mt={3}>{data.translation[locale]}</Text>
       {isPlay.status && isPlay.no === data.number.inSurah ? (
         <Progress
+          transition={'all'}
           mt={10}
           colorScheme='gray'
           height='1px'
