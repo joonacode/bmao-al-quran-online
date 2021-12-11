@@ -79,5 +79,6 @@ export default HomePage;
 //     props: {
 //       listSurat: response.data.data,
 //     },
+//     revalidate: 604800
 //   };
 // }

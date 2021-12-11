@@ -1,15 +1,26 @@
-import { Text } from '@chakra-ui/layout';
 import React, { useEffect, useState } from 'react';
 import { scroller } from 'react-scroll';
 import { useRouter } from 'next/router';
-import { VerseItem } from '@/components';
-const ListVerses = ({ verses, versesID }) => {
+import { ModalTafsir, VerseItem } from '@/components';
+
+const ListVerses = ({ detailSurah, versesID }) => {
   const { query, push } = useRouter();
   const [isPlay, setIsPlay] = useState({
     status: false,
     loop: false,
     no: null,
   });
+
+  const [detailAyat, setDetailAyat] = useState({});
+  const [modalTafsir, setModalTafsir] = useState(false);
+  const showModalTafsir = (data) => {
+    setModalTafsir(true);
+    setDetailAyat(data);
+  };
+  const closeModalTafsir = () => {
+    setModalTafsir(false);
+    setDetailAyat({});
+  };
 
   const handlePlay = (no) => {
     setIsPlay((prev) => ({
@@ -28,8 +39,8 @@ const ListVerses = ({ verses, versesID }) => {
   };
   const handleEnd = (no, isNext) => {
     if (isNext) {
-      const status = no < verses.length ? true : false;
-      const nextNo = no < verses.length ? (no += 1) : no;
+      const status = no < detailSurah.verses.length ? true : false;
+      const nextNo = no < detailSurah.verses.length ? (no += 1) : no;
       setIsPlay((prev) => ({
         ...prev,
         loop: false,
@@ -59,9 +70,18 @@ const ListVerses = ({ verses, versesID }) => {
   }, [query.surahId]);
 
   return (
-    <div>
-      {verses.map((verse, i) => (
+    <>
+      {modalTafsir && (
+        <ModalTafsir
+          isOpen={modalTafsir}
+          onClose={closeModalTafsir}
+          detailAyat={detailAyat}
+          detailSurah={detailSurah}
+        />
+      )}
+      {detailSurah.verses.map((verse, i) => (
         <VerseItem
+          showTafsir={showModalTafsir}
           isPlay={isPlay}
           handlePlay={handlePlay}
           handleEnd={handleEnd}
@@ -72,7 +92,7 @@ const ListVerses = ({ verses, versesID }) => {
           dataID={versesID.data[i]}
         />
       ))}
-    </div>
+    </>
   );
 };
 

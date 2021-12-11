@@ -5,6 +5,7 @@ import SurahItem from './Surah/Item';
 import ButtonTheme from './ButtonTheme';
 import ListVerses from './Verses/List';
 import VerseItem from './Verses/Item';
+import ModalTafsir from './ModalTafsir';
 
 export {
   Navbar,
@@ -14,4 +15,5 @@ export {
   ListVerses,
   VerseItem,
   SurahItem,
+  ModalTafsir,
 };

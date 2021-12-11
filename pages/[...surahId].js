@@ -81,10 +81,10 @@ const HomePage = ({ detailSurah }) => {
             ? detailSurah.tafsir.id.slice(0, 155) + '...'
             : detailSurah.tafsir.id
         }
-        title={`${detailSurah.name.transliteration[locale.split('-')[0]]}`}
+        title={`${detailSurah.name.transliteration[locale]}`}
         openGraph={{
           locale: locale,
-          title: `${detailSurah.name.transliteration[locale.split('-')[0]]}`,
+          title: `${detailSurah.name.transliteration[locale]}`,
           url: process.env.NEXT_PUBLIC_MAIN_URL + asPath,
           description:
             detailSurah.tafsir.id.length > 155
@@ -108,7 +108,10 @@ const HomePage = ({ detailSurah }) => {
         totalAyat={detailSurah.numberOfVerses}
       >
         <Flex justifyContent='center' w='full' mb={10}>
-          <Tag mr={3}>{detailSurah.name.transliteration[locale]}</Tag>
+          <Tag mr={3}>
+            {detailSurah.name.transliteration[locale]} -{' '}
+            {detailSurah.name.translation[locale]}
+          </Tag>
           <Tag mr={3}>{detailSurah.numberOfVerses} Ayat</Tag>
           <Tag>{detailSurah.revelation[locale]}</Tag>
         </Flex>
@@ -124,7 +127,7 @@ const HomePage = ({ detailSurah }) => {
             {detailSurah.preBismillah.text.arab}
           </Heading>
         )}
-        <ListVerses verses={detailSurah.verses} versesID={detailSurahID} />
+        <ListVerses detailSurah={detailSurah} versesID={detailSurahID} />
         <Flex mt={20} justifyContent='space-between' alignItems='center'>
           {Number(query.surahId[0]) > 1 && (
             <Link
@@ -212,6 +215,7 @@ export async function getStaticProps(ctx) {
     props: {
       detailSurah: response.data.data,
     },
+    revalidate: 604800,
   };
 }
 

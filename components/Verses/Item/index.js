@@ -18,6 +18,7 @@ import {
   FaTelegramPlane,
   FaTwitter,
   FaWhatsapp,
+  FaBook,
 } from 'react-icons/fa';
 import { CircularProgress, Progress } from '@chakra-ui/progress';
 
@@ -33,6 +34,7 @@ const VerseItem = ({
   handleEnd,
   handleLoop,
   isDataIdLoading,
+  showTafsir,
 }) => {
   const { locale, query } = useRouter();
   const toast = useToast();
@@ -64,9 +66,7 @@ const VerseItem = ({
       (locale !== 'id' ? 'en/' : '') +
       query.surahId[0]
     }/${data.number.inSurah}`;
-    const text = `Q.S ${query.surahId[0]}:${data.number.inSurah} - ${
-      data.text.arab
-    } - ${data.translation[locale.split('-')[0]]} - ${urlShare}`;
+    const text = `Q.S ${query.surahId[0]}:${data.number.inSurah} - ${data.text.arab} - ${data.translation[locale]} - ${urlShare}`;
     if (shareBy === 'copy') {
       copy(text);
       toast({
@@ -203,11 +203,22 @@ const VerseItem = ({
             </MenuItem>
           </MenuList>
         </Menu>
+        {locale === 'id' && (
+          <IconButton
+            title='tafsir'
+            onClick={() => showTafsir(data)}
+            colorScheme={'teal'}
+            variant='solid'
+            size='sm'
+            ml={2}
+            icon={<FaBook />}
+          />
+        )}
       </Flex>
       <Text fontSize={36} mb={5} className='fontAlQalam' textAlign='right'>
         {data.text.arab}
       </Text>
-      {locale.split('-')[0] === 'en' ? (
+      {locale === 'en' ? (
         <Text>{data.text.transliteration.en}</Text>
       ) : (
         <>
@@ -221,7 +232,7 @@ const VerseItem = ({
           )}
         </>
       )}
-      <Text mt={3}>{data.translation[locale.split('-')[0]]}</Text>
+      <Text mt={3}>{data.translation[locale]}</Text>
       {isPlay.status && isPlay.no === data.number.inSurah ? (
         <Progress
           mt={10}
