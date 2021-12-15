@@ -1,8 +1,13 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import { DefaultSeo } from 'next-seo';
 import '../styles/global.css';
+import TagManager from 'react-gtm-module';
+import { useEffect } from 'react';
 
 function MyApp({ Component, pageProps }) {
+  useEffect(() => {
+    TagManager.initialize({ gtmId: 'GTM-' + process.env.NEXT_PUBLIC_GTM });
+  }, []);
   return (
     <>
       <DefaultSeo
