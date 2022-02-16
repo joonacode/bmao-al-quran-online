@@ -35,7 +35,7 @@ const ModalTafsirVerse: React.FC<ModalTafsirVerseProps & IModalProps> = ({
           <Button variant='warning' onClick={onClose}>
             Tutup
           </Button>
-          <div>
+          <div className='flex items-center gap-1'>
             {(detailAyat?.number.inSurah || 0) > 1 && (
               <Button onClick={prevTafsir}>Sebelumnya</Button>
             )}

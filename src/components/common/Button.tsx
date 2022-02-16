@@ -28,7 +28,7 @@ const Button: React.FC<ButtonProps> = ({
   ...rest
 }) => {
   let classNameArr = [
-    'rounded-md shadow-md text-white dark:text-gray-800 flex items-center',
+    'rounded-md shadow-md text-white dark:text-gray-800 flex items-center justify-center',
     'bg-gray-400 dark:bg-gray-200',
   ];
 
