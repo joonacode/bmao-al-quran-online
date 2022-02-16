@@ -42,8 +42,6 @@ const HomePage: NextPage = () => {
                   .replace(/[-]/g, ' ')
                   .replace(/[^a-zA-Z ]/g, '')
                   .toLowerCase()
-                  .split('-')
-                  .join(' ')
                   .includes(search.toLowerCase()),
               )
         }
