@@ -1,5 +1,12 @@
 {
   "name": "BMAO - Baca Menghapal Al-Qur'an Online",
+  "short_name": "BMAO",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "description": "BMAO merupakan website untuk Membaca, Menghapal, Mendengarkan Al-Qur'an secara online",
   "icons": [
     {
       "src": "/android-icon-36x36.png",
