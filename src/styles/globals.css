@@ -1,0 +1,17 @@
+@font-face {
+  font-family: FontAlQalam;
+  src: url('../../public/fonts/Al_Qalam_Quran.ttf');
+}
+
+.fontAlQalam {
+  font-family: FontAlQalam !important;
+  line-height: 60px !important;
+}
+
+.dark  .completedVal > div {
+  background-color: #ddd !important;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
