@@ -1,8 +1,8 @@
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from '@components/common';
-import { IModalProps, IVerse } from '@constants/types';
+import { IModalProps } from '@constants/types';
 import { memo } from 'react';
 
-interface ModalSettingProps {}
+interface ModalSettingProps { }
 
 const ModalSetting: React.FC<ModalSettingProps & IModalProps> = ({ isOpen, onClose }) => {
   return (
