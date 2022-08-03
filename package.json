@@ -12,6 +12,7 @@
     "@emotion/react": "^11.7.1",
     "@ramonak/react-progress-bar": "^4.4.0",
     "axios": "^0.25.0",
+    "clsx": "^1.2.1",
     "copy-to-clipboard": "^3.3.1",
     "next": "12.0.10",
     "next-pwa": "^5.4.4",

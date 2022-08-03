@@ -78,6 +78,7 @@ export default DetailSurah;
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const surahId = getSurahId(ctx.params?.surahId);
+  console.log('SURAH ID SERVER', surahId);
   if (surahId > 114) {
     return {
       notFound: true,
@@ -94,6 +95,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       revalidate: 604800,
     };
   } catch (err) {
+    console.log('ERROR SERVER', err);
     return {
       notFound: true,
     };
