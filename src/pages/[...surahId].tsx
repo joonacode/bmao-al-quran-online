@@ -84,7 +84,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       notFound: true,
     };
   }
-  try {
     const response = await listEndpoint.getDetailSurat(`${surahId}`);
     const responseTranslate = await listEndpoint.getTranslateSuratID(`${surahId}`);
     return {
@@ -94,12 +93,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       },
       revalidate: 604800,
     };
-  } catch (err) {
-    console.log('ERROR SERVER', err);
-    return {
-      notFound: true,
-    };
-  }
 };
 
 export async function getStaticPaths() {
